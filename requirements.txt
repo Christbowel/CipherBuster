@@ -1,0 +1,6 @@
+gmpy2
+pycryptodome==3.20.0
+factordb-pycli==1.3.0
+rich==13.4.2
+termcolor==2.3.0
+sympy==1.13.1
