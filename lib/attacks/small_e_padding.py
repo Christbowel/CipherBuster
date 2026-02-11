@@ -29,7 +29,6 @@ class SmallEPaddingAttack(BaseAttack):
         self._start_timer()
         self.log(f"Analyse de e={e} avec n de {n.bit_length()} bits", "INFO")
         
-        # Vérifier si e est petit
         if e > 65537:
             return AttackResult(
                 status=AttackStatus.FAILED,
@@ -38,7 +37,7 @@ class SmallEPaddingAttack(BaseAttack):
         
         self.log(f"✓ e={e} est petit, tentative d'attaque...", "INFO")
         
-        # Stratégie 1: Racine directe (c = m^e sans mod)
+
         self.log("Stratégie 1: Racine directe...", "INFO")
         m = nth_root(c, e)
         
@@ -65,10 +64,9 @@ class SmallEPaddingAttack(BaseAttack):
                 }
             )
         
-        # Stratégie 2: Avec ajustements k*n
         self.log("Stratégie 2: Avec ajustements k*n...", "INFO")
         
-        max_k = min(1000, 2 ** e)  # Limiter la recherche
+        max_k = min(1000, 2 ** e)  
         
         for k in range(1, max_k):
             adjusted = c + k * n
@@ -96,11 +94,9 @@ class SmallEPaddingAttack(BaseAttack):
                         }
                     )
             
-            # Log périodique
             if self.verbose and k % 100 == 0:
                 self.log(f"Test k={k}/{max_k}...", "INFO")
             
-            # Timeout
             if self._check_timeout():
                 return AttackResult(
                     status=AttackStatus.TIMEOUT,
@@ -108,7 +104,6 @@ class SmallEPaddingAttack(BaseAttack):
                     message=f"Timeout après k={k}"
                 )
         
-        # Stratégie 3: Håstad si e messages disponibles
         if 'ciphertexts' in params and 'moduli' in params:
             self.log("Stratégie 3: Tentative Håstad Broadcast...", "INFO")
             # Déléguer à HastadAttack

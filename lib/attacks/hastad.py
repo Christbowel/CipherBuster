@@ -29,7 +29,6 @@ class HastadBroadcastAttack(BaseAttack):
         self._start_timer()
         self.log(f"Démarrage Håstad Broadcast Attack avec e={e}", "INFO")
         
-        # Vérifications
         if len(ciphertexts) < e:
             return AttackResult(
                 status=AttackStatus.FAILED,
@@ -42,7 +41,6 @@ class HastadBroadcastAttack(BaseAttack):
                 message=f"Pas assez de modules: {len(moduli)} < {e}"
             )
         
-        # Prendre les e premiers
         c_list = ciphertexts[:e]
         n_list = moduli[:e]
         
@@ -70,7 +68,7 @@ class HastadBroadcastAttack(BaseAttack):
                 self.log(f"✓ Message retrouvé!", "SUCCESS")
                 self.log(f"m = {m}", "SUCCESS")
                 
-                # Convertir en bytes
+                
                 try:
                     plaintext = m.to_bytes((m.bit_length() + 7) // 8, 'big')
                     decoded = plaintext.decode('utf-8', errors='ignore')

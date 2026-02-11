@@ -40,7 +40,6 @@ class FermatAttack(BaseAttack):
                 message="n est pair"
             )
         
-        # Commencer avec a = ceil(sqrt(n))
         a = isqrt(n)
         if a * a < n:
             a += 1

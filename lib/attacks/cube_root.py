@@ -31,12 +31,10 @@ class CubeRootAttack(BaseAttack):
         if e != 3:
             self.log("⚠ Cette attaque est optimisée pour e=3", "WARNING")
         
-        # Tentative 1: Racine directe
         self.log("Tentative de racine directe (sans modulo)...", "INFO")
         m = nth_root(c, e)
         
         if m is not None:
-            # Vérification
             if pow(m, e) == c:
                 self.log(f"✓ Message trouvé! m = {m}", "SUCCESS")
                 self.log(f"✓ m^{e} = c (pas de modulo nécessaire)", "SUCCESS")
@@ -61,16 +59,14 @@ class CubeRootAttack(BaseAttack):
                     }
                 )
         
-        # Tentative 2: Avec ajustements (k*n + c)
         if n is not None:
             self.log("Tentative avec ajustements k*n + c...", "INFO")
             
-            for k in range(1, 100):  # Tester quelques valeurs de k
+            for k in range(1, 100):  
                 adjusted_c = c + k * n
                 m_candidate = nth_root(adjusted_c, e)
                 
                 if m_candidate is not None:
-                    # Vérifier avec n
                     if pow(m_candidate, e, n) == c:
                         self.log(f"✓ Message trouvé avec k={k}!", "SUCCESS")
                         

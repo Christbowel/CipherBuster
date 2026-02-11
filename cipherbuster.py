@@ -23,7 +23,6 @@ from lib.attacks.franklin_reiter import FranklinReiterAttack
 from lib.attacks.legacy_wrapper import CommonModulusAttack, CommonPrimeAttack, FactorDBAttack
 from lib.attacks.base import AttackStatus
 
-# Imports anciennes fonctions (compatibilité)
 
 
 # Auto-detector
@@ -41,7 +40,7 @@ def banner():
 \___/_/ .__/_//_/\__/_/ /____/\_,_/___/\__/\__/_/    v2.0
      /_/
     [cyan]Creator:[/cyan] [green]Christbowel[/green]
-    [yellow]🔥 Version Optimisée - Architecture Modulaire[/yellow]
+    [yellow]🔥 Optimized Version - Modular Architecture[/yellow]
     '''
     console.print(Panel(banner_text, border_style="cyan"))
 
@@ -62,43 +61,43 @@ def show_menu():
     attacks = [
         # Factorisation
         ("", "[bold white]── FACTORISATION ──[/bold white]", "", ""),
-        ("1",  "Fermat",              "Factorisation",  "✅ OPTIMISÉ"),
-        ("2",  "Fermat Variants",     "Factorisation",  "🆕 NOUVEAU"),
-        ("3",  "Pollard's Rho",       "Factorisation",  "✅ OPTIMISÉ"),
-        ("4",  "Pollard's p-1",       "Factorisation",  "✅ NOUVEAU"),
-        ("5",  "Williams p+1",        "Factorisation",  "🆕 NOUVEAU"),
-        ("6",  "Multi-Prime RSA",     "Factorisation",  "🆕 NOUVEAU"),
+        ("1",  "Fermat",              "Factorisation",  "✅ OPTIMISED"),
+        ("2",  "Fermat Variants",     "Factorisation",  "🆕 NEW"),
+        ("3",  "Pollard's Rho",       "Factorisation",  "✅ OPTIMIZED"),
+        ("4",  "Pollard's p-1",       "Factorisation",  "✅ NEW"),
+        ("5",  "Williams p+1",        "Factorisation",  "🆕 NEW"),
+        ("6",  "Multi-Prime RSA",     "Factorisation",  "🆕 NEW"),
         # Exposants
-        ("", "[bold white]── EXPOSANTS ──[/bold white]", "", ""),
-        ("7",  "Wiener's Attack",     "Petit Exposant", "✅ CORRIGÉ"),
-        ("8",  "Håstad Broadcast",    "Petit Exposant", "🆕 NOUVEAU"),
-        ("9",  "Cube Root (e=3)",     "Petit Exposant", "🆕 NOUVEAU"),
-        ("10", "Small e + Padding",   "Petit Exposant", "🆕 NOUVEAU"),
+        ("", "[bold white]── EXPONENT ──[/bold white]", "", ""),
+        ("7",  "Wiener's Attack",     "Petit Exposant", "✅ FIXED"),
+        ("8",  "Håstad Broadcast",    "Petit Exposant", "🆕 NEW"),
+        ("9",  "Cube Root (e=3)",     "Petit Exposant", "🆕 NEW"),
+        ("10", "Small e + Padding",   "Petit Exposant", "🆕 NEW"),
         # Oracle
         ("", "[bold white]── ORACLE ──[/bold white]", "", ""),
-        ("11", "LSB Oracle",          "Oracle",         "🆕 NOUVEAU"),
+        ("11", "LSB Oracle",          "Oracle",         "🆕 NEW"),
         # Multi-Clés
-        ("", "[bold white]── MULTI-CLÉS ──[/bold white]", "", ""),
-        ("12", "Franklin-Reiter",     "Messages Liés",  "✅ CORRIGÉ"),
+        ("", "[bold white]── MULTI-KEY ──[/bold white]", "", ""),
+        ("12", "Franklin-Reiter",     "Messages Liés",  "✅ FIXED"),
         ("13", "Common Modulus",      "Multi-clés",     "✓"),
         ("14", "Common Prime Factor", "Multi-modules",  "✓"),
-        ("15", "Batch GCD",           "Multi-modules",  "🆕 NOUVEAU"),
+        ("15", "Batch GCD",           "Multi-modules",  "🆕 NEW"),
         # Avancées
-        ("", "[bold white]── AVANCÉES ──[/bold white]", "", ""),
-        ("16", "Partial Key Exposure","Clé Partielle",  "🆕 NOUVEAU"),
-        ("17", "Known Plaintext",     "Texte Clair",    "🆕 NOUVEAU"),
-        ("18", "Smooth Number",       "Analyse",        "🆕 NOUVEAU"),
+        ("", "[bold white]── ADVANCED ──[/bold white]", "", ""),
+        ("16", "Partial Key Exposure","Clé Partielle",  "🆕 NEW"),
+        ("17", "Known Plaintext",     "Texte Clair",    "🆕 NEW"),
+        ("18", "Smooth Number",       "Analyse",        "🆕 NEW"),
         # Database
-        ("", "[bold white]── BASE DE DONNÉES ──[/bold white]", "", ""),
+        ("", "[bold white]── DATABASE ──[/bold white]", "", ""),
         ("19", "FactorDB Lookup",     "Database",       "✓"),
         # Utilitaires
-        ("", "[bold white]── UTILITAIRES ──[/bold white]", "", ""),
+        ("", "[bold white]── UTILITIES ──[/bold white]", "", ""),
         ("20", "RSA Encode/Decode",   "Utilitaire",     "✓"),
-        ("21", "Key Loader",          "Utilitaire",     "🆕 NOUVEAU"),
+        ("21", "Key Loader",          "Utilitaire",     "🆕 NEW"),
         ("22", "Private Key Compute", "Utilitaire",     "✓"),
         # Spécial
         ("", "", "", ""),
-        ("99", "🤖 AUTO-DETECT",      "Analyse Auto",   "🆕 NOUVEAU"),
+        ("99", "🤖 AUTO-DETECT",      "Automated Analysis",   "🆕 NEW"),
         ("0",  "Exit",                "",               ""),
     ]
     

@@ -3,7 +3,7 @@ name: Build & Release CipherBuster
 on:
   push:
     tags:
-      - 'v*'  # Se déclenche sur les tags v2.0, v2.1, etc.
+      - 'v*'  
 
 jobs:
   build-linux:
@@ -154,9 +154,7 @@ jobs:
             cipherbuster-windows.exe
 ```
             
-            ## 🔥 Attaques disponibles
             
-            ### Factorisation
             - Fermat (optimisé)
             - Fermat Variants (skip2, mod8, adaptive)
             - Pollard's Rho (Floyd)
@@ -164,28 +162,23 @@ jobs:
             - Williams p+1
             - Multi-Prime RSA
             
-            ### Exposants
             - Wiener's Attack (corrigé)
             - Håstad Broadcast
             - Cube Root (e=3)
             - Small e + Padding
             
-            ### Oracle
             - LSB Oracle
             
-            ### Multi-Clés
             - Franklin-Reiter (corrigé)
             - Common Modulus
             - Common Prime Factor
             - Batch GCD
             
-            ### Avancées
             - Partial Key Exposure
             - Known Plaintext
             - Smooth Number Detection
             - FactorDB Lookup
             
-            ## ⚠️ Avertissement
             Outil éducatif et de recherche en sécurité uniquement.
           files: |
             cipherbuster-linux/cipherbuster-linux

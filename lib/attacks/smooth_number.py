@@ -30,7 +30,6 @@ class SmoothNumberAttack(BaseAttack):
         self._start_timer()
         self.log(f"Analyse de friabilité avec B={B_test}", "INFO")
         
-        # Tester si n lui-même est friable
         factors = self._trial_factorization(n, B_test)
         
         if factors and math.prod(factors) == n:
@@ -51,14 +50,13 @@ class SmoothNumberAttack(BaseAttack):
                 }
             )
         
-        # Estimer la friabilité
+
         largest_factor_found = max(factors) if factors else 0
         smoothness_score = self._compute_smoothness(n, factors, B_test)
         
         self.log(f"Plus grand facteur trouvé ≤ {B_test}: {largest_factor_found}", "INFO")
         self.log(f"Score de friabilité: {smoothness_score:.2f}", "INFO")
         
-        # Recommandations
         recommendations = []
         
         if smoothness_score > 0.5:
@@ -98,13 +96,13 @@ class SmoothNumberAttack(BaseAttack):
                 factors.append(d)
                 n //= d
             
-            d += 1 if d == 2 else 2  # Skip even numbers after 2
+            d += 1 if d == 2 else 2  
             
             if self._check_timeout():
                 break
         
         if n > 1 and n != factors:
-            factors.append(n)  # Facteur restant
+            factors.append(n)  
         
         return factors
     
@@ -113,12 +111,11 @@ class SmoothNumberAttack(BaseAttack):
         if not factors:
             return 0.0
         
-        # Score basé sur le plus grand facteur trouvé
         largest = max(factors)
         
         if largest <= B:
             return 1.0
         
-        # Score partiel
+
         score = math.log(B) / math.log(largest) if largest > B else 1.0
         return max(0.0, min(1.0, score))

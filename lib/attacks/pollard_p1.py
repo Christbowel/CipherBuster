@@ -40,7 +40,6 @@ class PollardP1Attack(BaseAttack):
                 message="n est pair"
             )
     
-        # Générer les nombres premiers
         primes = self._sieve_of_eratosthenes(B)
         self.log(f"Utilisation de {len(primes)} premiers ≤ {B}", "INFO")
     
@@ -48,14 +47,12 @@ class PollardP1Attack(BaseAttack):
         a = 2
     
         for i, p in enumerate(primes):
-            # Calculer la plus grande puissance de p ≤ B
             p_power = p
             while p_power * p <= B:
                 p_power *= p
         
             a = pow(a, p_power, n)
         
-            # Vérifier GCD périodiquement
             if i % 20 == 0:
                 from ..utils.math_utils import gcd
                 g = gcd(a - 1, n)
@@ -81,7 +78,6 @@ class PollardP1Attack(BaseAttack):
                     message="Timeout"
                 )
     
-        # Vérification finale
         from ..utils.math_utils import gcd
         g = gcd(a - 1, n)
     

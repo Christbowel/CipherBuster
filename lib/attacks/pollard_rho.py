@@ -26,7 +26,6 @@ class PollardRhoAttack(BaseAttack):
         self._start_timer()
         self.log(f"Démarrage Pollard's Rho sur n={n}", "INFO")
         
-        # Vérifications basiques
         if n <= 1:
             return AttackResult(
                 status=AttackStatus.FAILED,
@@ -42,11 +41,11 @@ class PollardRhoAttack(BaseAttack):
                 message="Factorisation réussie"
             )
         
-        # Fonction polynomiale f(x) = (x² + c) mod n
+
         def f(x, c, n):
             return (x * x + c) % n
         
-        # Essayer plusieurs valeurs de c
+        
         for c in [1, 2, 3, 5, 7]:
             self.log(f"Tentative avec c={c}", "INFO")
             
@@ -98,7 +97,6 @@ class PollardRhoAttack(BaseAttack):
                     metadata={"c": c}
                 )
         
-        # Échec après avoir testé tous les c
         self.log("Échec de la factorisation", "ERROR")
         return AttackResult(
             status=AttackStatus.FAILED,

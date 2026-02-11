@@ -42,16 +42,13 @@ class FermatVariantsAttack(BaseAttack):
                 message="n pair"
             )
         
-        # Choisir la variante
         if variant == "auto":
-            # Détecter la meilleure
             if n % 8 == 1:
                 variant = "mod8"
             else:
                 variant = "skip2"
             self.log(f"Variante auto-sélectionnée: {variant}", "INFO")
         
-        # Exécuter la variante choisie
         if variant == "skip2":
             return self._fermat_skip2(n, max_iterations)
         elif variant == "mod8":
@@ -72,7 +69,6 @@ class FermatVariantsAttack(BaseAttack):
         if a * a < n:
             a += 1
         
-        # Assurer que a est impair
         if a % 2 == 0:
             a += 1
         
@@ -94,7 +90,7 @@ class FermatVariantsAttack(BaseAttack):
                         metadata={"variant": "skip2", "speedup": "2x"}
                     )
             
-            a += 2  # Sauter les pairs
+            a += 2  
             
             if self.verbose and i % 20000 == 0:
                 self.log(f"Itération {i//2}...", "INFO")
@@ -177,7 +173,6 @@ class FermatVariantsAttack(BaseAttack):
                         message="Fermat Adaptive"
                     )
             
-            # Adapter le pas selon la distance à b²
             diff = b_sq - b * b
             if diff > 1000:
                 step = min(10, diff // 1000)
