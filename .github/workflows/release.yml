@@ -1,0 +1,194 @@
+name: Build & Release CipherBuster
+
+on:
+  push:
+    tags:
+      - 'v*'  # Se déclenche sur les tags v2.0, v2.1, etc.
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+          sudo apt-get install -y libgmp-dev libmpfr-dev libmpc-dev
+          pip install gmpy2
+      
+      - name: Build Linux binary
+        run: |
+          pyinstaller \
+            --onefile \
+            --name "cipherbuster-linux" \
+            --add-data "lib:lib" \
+            --hidden-import "gmpy2" \
+            --hidden-import "sympy" \
+            --hidden-import "rich" \
+            --hidden-import "factordb" \
+            --hidden-import "cryptography" \
+            --hidden-import "Crypto" \
+            cipherbuster.py
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cipherbuster-linux
+          path: dist/cipherbuster-linux
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+      
+      - name: Build Windows binary
+        run: |
+          pyinstaller `
+            --onefile `
+            --name "cipherbuster-windows" `
+            --add-data "lib;lib" `
+            --hidden-import "sympy" `
+            --hidden-import "rich" `
+            --hidden-import "factordb" `
+            --hidden-import "cryptography" `
+            --hidden-import "Crypto" `
+            cipherbuster.py
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cipherbuster-windows
+          path: dist/cipherbuster-windows.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          brew install gmp mpfr libmpc
+          pip install -r requirements.txt
+          pip install pyinstaller gmpy2
+      
+      - name: Build macOS binary
+        run: |
+          pyinstaller \
+            --onefile \
+            --name "cipherbuster-macos" \
+            --add-data "lib:lib" \
+            --hidden-import "gmpy2" \
+            --hidden-import "sympy" \
+            --hidden-import "rich" \
+            --hidden-import "factordb" \
+            --hidden-import "cryptography" \
+            --hidden-import "Crypto" \
+            cipherbuster.py
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cipherbuster-macos
+          path: dist/cipherbuster-macos
+
+  release:
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "CipherBuster ${{ github.ref_name }}"
+          body: |
+            # 🔐 CipherBuster ${{ github.ref_name }}
+            
+            ## ✨ Nouveautés
+            - 19 attaques RSA (vs 9 en v1)
+            - Key Loader universel (PEM, DER, SSH, JWK, XML, PGP...)
+            - Auto-detect intelligent
+            - Interface Rich professionnelle
+            - Architecture modulaire
+            
+            ## 📦 Binaires disponibles
+            
+            | Plateforme | Fichier | Architecture |
+            |------------|---------|--------------|
+            | 🐧 Linux | `cipherbuster-linux` | x86_64 |
+            | 🪟 Windows | `cipherbuster-windows.exe` | x86_64 |
+            | 🍎 macOS | `cipherbuster-macos` | x86_64/ARM |
+            
+            ## 🚀 Utilisation rapide
+```bash
+            # Linux/macOS
+            chmod +x cipherbuster-linux
+            ./cipherbuster-linux
+            
+            # Windows
+            cipherbuster-windows.exe
+```
+            
+            ## 🔥 Attaques disponibles
+            
+            ### Factorisation
+            - Fermat (optimisé)
+            - Fermat Variants (skip2, mod8, adaptive)
+            - Pollard's Rho (Floyd)
+            - Pollard's p-1
+            - Williams p+1
+            - Multi-Prime RSA
+            
+            ### Exposants
+            - Wiener's Attack (corrigé)
+            - Håstad Broadcast
+            - Cube Root (e=3)
+            - Small e + Padding
+            
+            ### Oracle
+            - LSB Oracle
+            
+            ### Multi-Clés
+            - Franklin-Reiter (corrigé)
+            - Common Modulus
+            - Common Prime Factor
+            - Batch GCD
+            
+            ### Avancées
+            - Partial Key Exposure
+            - Known Plaintext
+            - Smooth Number Detection
+            - FactorDB Lookup
+            
+            ## ⚠️ Avertissement
+            Outil éducatif et de recherche en sécurité uniquement.
+          files: |
+            cipherbuster-linux/cipherbuster-linux
+            cipherbuster-windows/cipherbuster-windows.exe
+            cipherbuster-macos/cipherbuster-macos
+          token: ${{ secrets.GITHUB_TOKEN }}
