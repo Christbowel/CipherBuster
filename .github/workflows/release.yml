@@ -2,8 +2,11 @@ name: Build & Release CipherBuster
 
 on:
   push:
+    branches:
+      - main
+      - optimization-v2
     tags:
-      - 'v*'  
+      - 'v*'
 
 jobs:
   build-linux:
