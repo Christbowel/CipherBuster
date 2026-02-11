@@ -119,6 +119,10 @@ jobs:
   release:
     needs: [build-linux, build-windows, build-macos]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # <--- AJOUTE CETTE LIGNE
+    steps:
+      - uses: actions/checkout@v4
     steps:
       - uses: actions/checkout@v4
       
