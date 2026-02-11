@@ -145,14 +145,14 @@ jobs:
             | 🍎 macOS | `cipherbuster-macos` | x86_64/ARM |
             
             ## 🚀 Utilisation rapide
-```bash
+            ```bash
             # Linux/macOS
             chmod +x cipherbuster-linux
             ./cipherbuster-linux
             
             # Windows
             cipherbuster-windows.exe
-```
+            ```
             
             
             - Fermat (optimisé)
