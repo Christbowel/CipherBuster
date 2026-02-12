@@ -28,17 +28,14 @@ jobs:
       
       - name: Build Linux binary
         run: |
-          pyinstaller \
-            --onefile \
-            --name "cipherbuster-linux" \
+          pyinstaller --onefile --name "cipherbuster-linux" \
             --add-data "lib:lib" \
             --collect-all gmpy2 \
-            --hidden-import "gmpy2" \
+            --collect-all rich \
+            --collect-all cryptography \
+            --collect-all pycryptodome \
             --hidden-import "sympy" \
-            --hidden-import "rich" \
             --hidden-import "factordb" \
-            --hidden-import "cryptography" \
-            --hidden-import "Crypto" \
             cipherbuster.py
       
       - name: Upload artifact
@@ -99,17 +96,14 @@ jobs:
       
       - name: Build macOS binary
         run: |
-          pyinstaller \
-            --onefile \
-            --name "cipherbuster-macos" \
+          pyinstaller --onefile --name "cipherbuster-linux" \
             --add-data "lib:lib" \
             --collect-all gmpy2 \
-            --hidden-import "gmpy2" \
+            --collect-all rich \
+            --collect-all cryptography \
+            --collect-all pycryptodome \
             --hidden-import "sympy" \
-            --hidden-import "rich" \
             --hidden-import "factordb" \
-            --hidden-import "cryptography" \
-            --hidden-import "Crypto" \
             cipherbuster.py
       
       - name: Upload artifact
